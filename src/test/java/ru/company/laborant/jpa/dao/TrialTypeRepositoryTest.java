@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
-import ru.company.laborant.jpa.domain.Customer;
 import ru.company.laborant.jpa.domain.Folder;
+import ru.company.laborant.jpa.domain.StatType;
+import ru.company.laborant.jpa.domain.TrialType;
 
 import java.util.Optional;
 
@@ -17,10 +18,10 @@ import java.util.Optional;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CustomerRepositoryTest {
+public class TrialTypeRepositoryTest {
 
     @Autowired
-    private CustomerRepository repository;
+    private TrialTypeRepository repository;
     @Autowired
     private FolderRepository folderRepository;
 
@@ -29,12 +30,12 @@ public class CustomerRepositoryTest {
         Folder folder = new Folder();
         folderRepository.save(folder);
 
-        Customer added = new Customer();
-        added.setFullName("fullname");
+        TrialType added = new TrialType();
+        added.setName("name");
         added.setFolder(folder);
-        Customer saved = repository.save(added);
+        TrialType saved = repository.save(added);
         Assert.isTrue(saved.getId().equals(1L));
-        Optional<Customer> customer = repository.findById(1L);
+        Optional<TrialType> customer = repository.findById(1L);
         System.out.println(customer);
         Assert.isTrue(customer.isPresent());
     }

@@ -17,7 +17,7 @@ public class Trait {
     @SequenceGenerator(name = "SEQ_TRAIT", sequenceName = "SEQ_TRAIT", allocationSize = 100)
     private Long id;
     private String name;
-    private String memo;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "statTypeId")
     private StatType statType;
