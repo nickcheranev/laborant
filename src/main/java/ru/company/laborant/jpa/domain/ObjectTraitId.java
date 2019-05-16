@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Embeddable
 public class ObjectTraitId implements Serializable {
 
-    public ObjectTrialTypeId objectTrialTypeId;
-    public Long traitId;
+    private ObjectTrialTypeId objectTrialTypeId;
+    private Long traitId;
 
     public ObjectTraitId(ObjectTrialTypeId objectTrialTypeId, Long traitId) {
         this.objectTrialTypeId = objectTrialTypeId;
