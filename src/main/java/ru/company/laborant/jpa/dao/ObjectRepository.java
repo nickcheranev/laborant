@@ -1,7 +1,7 @@
 package ru.company.laborant.jpa.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.company.laborant.jpa.domain.StatType;
+import ru.company.laborant.jpa.domain.Object;
 
 import java.util.Optional;
 
@@ -9,6 +9,6 @@ import java.util.Optional;
  * @author Cheranev N.
  * created on 09.05.2019.
  */
-public interface StatTypeRepository extends JpaRepository<StatType, Long> {
-    Optional<StatType> findById(Long id);
+public interface ObjectRepository extends JpaRepository<Object, Long> {
+    Optional<Object> findById(Long id);
 }

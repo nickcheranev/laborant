@@ -1,6 +1,7 @@
 package ru.company.laborant.jpa.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * created on 14.05.2019.
  */
 @Data
+@NoArgsConstructor
 @Embeddable
 public class ObjectTraitId implements Serializable {
 

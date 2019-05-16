@@ -5,9 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Cheranev N.
@@ -23,20 +20,26 @@ public class ObjectTrait implements Serializable {
 
     @MapsId("trialTypeId")
     @ManyToOne
-    @JoinColumn(name = "trial_type_id", referencedColumnName = "id")
+    // @JoinColumn(name = "trial_type_id", referencedColumnName = "id")
     private TrialType trialType;
+
     @MapsId("objectId")
     @ManyToOne
-    @JoinColumn(name = "object_id", referencedColumnName = "id")
-    private ProbeObject probeObject;
+    // @JoinColumn(name = "object_id", referencedColumnName = "id")
+    private Object object;
 
-//    private Set<Trait> traits = new HashSet<>();
-//    @OneToMany(mappedBy = "object", cascade = CascadeType.ALL, orphanRemoval = true)
-//    public Set<Trait> getTraits() {
-//        return traits;
-//    }
+    @MapsId("traitId")
+    @ManyToOne
+    // @JoinColumn(name = "trait_id", referencedColumnName = "id")
+    private Trait trait;
 
     @ManyToOne
-    @JoinColumn(name = "folderId")
+    private NormativeDocument normativeDocumentProduct;
+
+    @ManyToOne
+    private NormativeDocument normativeDocumentMethod;
+
+    @ManyToOne
+   // @JoinColumn(name = "folderId")
     private Folder folder;
 }

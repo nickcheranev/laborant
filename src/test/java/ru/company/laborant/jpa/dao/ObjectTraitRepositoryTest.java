@@ -4,11 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 import ru.company.laborant.jpa.domain.*;
-
-import java.util.Optional;
+import ru.company.laborant.jpa.domain.Object;
 
 /**
  * @author Cheranev N.
@@ -23,11 +22,13 @@ public class ObjectTraitRepositoryTest {
     @Autowired
     private TrialTypeRepository trialTypeRepository;
     @Autowired
-    private ProbeObjectRepository probeObjectRepository;
+    private ObjectRepository objectRepository;
     @Autowired
     private FolderRepository folderRepository;
     @Autowired
     private ObjectTraitRepository objectTraitRepository;
+    @Autowired
+    private NormativeDocumentRepository normativeDocumentRepository;
 
     @Test
     // @Commit
@@ -35,42 +36,42 @@ public class ObjectTraitRepositoryTest {
         Folder folder = new Folder();
         folderRepository.save(folder);
 
-        TrialType tt = new TrialType();
-        tt.setName("name");
-        tt.setFolder(folder);
-        trialTypeRepository.saveAndFlush(tt);
+        TrialType trialType = new TrialType();
+        trialType.setName("name");
+        trialType.setFolder(folder);
+        trialTypeRepository.saveAndFlush(trialType);
 
-        ProbeObject po = new ProbeObject();
-        po.setName("object");
-        po.setFolder(folder);
-        probeObjectRepository.saveAndFlush(po);
+        Object object = new Object();
+        object.setName("object");
+        object.setFolder(folder);
+        objectRepository.saveAndFlush(object);
 
-        // 1
-        Trait trait1 = new Trait();
-        trait1.setName("trait 1");
-        trait1.setFolder(folder);
-        traitRepository.saveAndFlush(trait1);
-        // 2
-        Trait trait2 = new Trait();
-        trait2.setName("trait 2");
-        trait2.setFolder(folder);
-        traitRepository.saveAndFlush(trait2);
+        Trait trait = new Trait();
+        trait.setName("trait");
+        trait.setFolder(folder);
+        traitRepository.saveAndFlush(trait);
 
-        ObjectTrait ot1 = new ObjectTrait();
-        ObjectTraitId id1 = new ObjectTraitId(po.getId(), tt.getId(), trait1.getId());
-        ot1.setId(id1);
-        ot1.setProbeObject(po);
-        ot1.setTrialType(tt);
-       // ot1.getTraits().add(trait1);
-        ObjectTrait savedOt1 = objectTraitRepository.saveAndFlush(ot1);
+        NormativeDocument normativeDocumentMethod = new NormativeDocument();
+        normativeDocumentMethod.setName("normativeDocumentMethod");
+        normativeDocumentMethod.setFolder(folder);
+        normativeDocumentRepository.saveAndFlush(normativeDocumentMethod);
 
-//        Assert.isTrue(savedOt1.isPresent());
-//        System.out.println("\n" + savedOtt.get() + "\n");
-//        System.out.println("\n" + savedOtt.get().getProbeObject() + "\n");
-//        System.out.println("\n" + savedOtt.get().getTrialType() + "\n");
+        NormativeDocument normativeDocumentProduct = new NormativeDocument();
+        normativeDocumentProduct.setName("normativeDocumentProduct");
+        normativeDocumentProduct.setFolder(folder);
+        normativeDocumentRepository.saveAndFlush(normativeDocumentProduct);
 
+        ObjectTrait objectTrait = new ObjectTrait();
+        ObjectTraitId id1 = new ObjectTraitId(object.getId(), trialType.getId(), trait.getId());
+        objectTrait.setId(id1);
+        objectTrait.setObject(object);
+        objectTrait.setTrialType(trialType);
+        objectTrait.setTrait(trait);
+        objectTrait.setNormativeDocumentMethod(normativeDocumentMethod);
+        objectTrait.setNormativeDocumentProduct(normativeDocumentProduct);
+        ObjectTrait savedOt1 = objectTraitRepository.saveAndFlush(objectTrait);
 
-
+        System.out.println("\n" + savedOt1 + "\n");
     }
 
 }

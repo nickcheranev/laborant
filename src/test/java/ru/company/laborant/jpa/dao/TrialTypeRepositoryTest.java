@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 import ru.company.laborant.jpa.domain.Folder;
-import ru.company.laborant.jpa.domain.StatType;
 import ru.company.laborant.jpa.domain.TrialType;
 
 import java.util.Optional;

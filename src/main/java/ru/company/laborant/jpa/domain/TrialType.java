@@ -3,7 +3,6 @@ package ru.company.laborant.jpa.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * @author Cheranev N.

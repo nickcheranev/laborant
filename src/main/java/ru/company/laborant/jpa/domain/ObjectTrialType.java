@@ -22,7 +22,7 @@ public class ObjectTrialType implements Serializable {
     @MapsId("objectId")
     @ManyToOne
     @JoinColumn(name = "object_id", referencedColumnName = "id")
-    private ProbeObject probeObject;
+    private Object probeObject;
     @EmbeddedId
     private ObjectTrialTypeId id;
     private String method;

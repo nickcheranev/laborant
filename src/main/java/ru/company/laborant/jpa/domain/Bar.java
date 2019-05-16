@@ -8,7 +8,7 @@ import javax.persistence.*;
  * @author Cheranev N.
  * created on 15.05.2019.
  */
-@Entity
+//@Entity
 @Data
 public class Bar {
     @Id

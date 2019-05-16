@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Cheranev N.
  * created on 15.05.2019.
  */
-@Entity
+//@Entity
 @Data
 public class Foo {
     @Id

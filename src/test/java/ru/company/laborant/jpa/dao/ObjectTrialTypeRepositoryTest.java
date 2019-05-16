@@ -4,11 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.company.laborant.jpa.domain.*;
+import ru.company.laborant.jpa.domain.Object;
 
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class ObjectTrialTypeRepositoryTest {
     @Autowired
     private TrialTypeRepository trialTypeRepository;
     @Autowired
-    private ProbeObjectRepository probeObjectRepository;
+    private ObjectRepository probeObjectRepository;
     @Autowired
     private FolderRepository folderRepository;
     @Autowired
@@ -48,7 +47,7 @@ public class ObjectTrialTypeRepositoryTest {
         tt.setFolder(folder);
         trialTypeRepository.saveAndFlush(tt);
 
-        ProbeObject po = new ProbeObject();
+        Object po = new Object();
         po.setName("object");
         po.setFolder(folder);
         probeObjectRepository.saveAndFlush(po);

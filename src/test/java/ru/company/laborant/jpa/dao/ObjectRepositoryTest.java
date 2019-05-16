@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
-import ru.company.laborant.jpa.domain.Customer;
 import ru.company.laborant.jpa.domain.Folder;
-import ru.company.laborant.jpa.domain.ProbeObject;
+import ru.company.laborant.jpa.domain.Object;
 
 import java.util.Optional;
 
@@ -18,10 +17,10 @@ import java.util.Optional;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ProbeObjectRepositoryTest {
+public class ObjectRepositoryTest {
 
     @Autowired
-    private ProbeObjectRepository repository;
+    private ObjectRepository repository;
     @Autowired
     private FolderRepository folderRepository;
 
@@ -30,12 +29,12 @@ public class ProbeObjectRepositoryTest {
         Folder folder = new Folder();
         folderRepository.save(folder);
 
-        ProbeObject added = new ProbeObject();
+        Object added = new Object();
         added.setName("name");
         added.setFolder(folder);
-        ProbeObject saved = repository.save(added);
+        Object saved = repository.save(added);
         Assert.isTrue(saved.getId().equals(1L));
-        Optional<ProbeObject> probeObject = repository.findById(1L);
+        Optional<Object> probeObject = repository.findById(1L);
         System.out.println(probeObject);
         Assert.isTrue(probeObject.isPresent());
     }
