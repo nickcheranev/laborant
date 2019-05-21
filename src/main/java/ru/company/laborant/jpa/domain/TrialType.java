@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
+ * Тип испытания
+ *
  * @author Cheranev N.
  * created on 09.05.2019.
  */

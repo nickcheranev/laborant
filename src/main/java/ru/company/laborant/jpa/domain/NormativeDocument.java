@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
+ * Нормативные документы
+ *
  * @author Cheranev N.
  * created on 04.02.2017.
  */
@@ -15,13 +17,16 @@ public class NormativeDocument {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_NORMATIVE_DOCUMENT")
-    @SequenceGenerator(name="SEQ_NORMATIVE_DOCUMENT", sequenceName="SEQ_NORMATIVE_DOCUMENT")
+    @SequenceGenerator(name = "SEQ_NORMATIVE_DOCUMENT", sequenceName = "SEQ_NORMATIVE_DOCUMENT")
     private Long id;
+    /**
+     * Наименование
+     */
     private String name;
     private String description;
     private Integer ord;
     @ManyToOne
-    @JoinColumn(name="folderId")
+    @JoinColumn(name = "folderId")
     private Folder folder;
     @OneToMany
     private Set<ObjectTrait> objectTraits;

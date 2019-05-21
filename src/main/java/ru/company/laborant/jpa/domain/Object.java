@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
+ * Объекты
+ *
  * @author Cheranev N.
  * created on 11.05.2019.
  */

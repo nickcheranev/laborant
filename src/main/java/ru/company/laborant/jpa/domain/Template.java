@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
+ * Шаблон протокола
+ *
  * @author Cheranev N.
  * created on 16.05.2019.
  */
