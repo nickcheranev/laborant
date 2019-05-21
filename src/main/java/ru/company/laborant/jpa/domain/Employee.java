@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
+ * Сотрудники
+ *
  * @author Cheranev N.
  * created on 04.02.2017.
  */
