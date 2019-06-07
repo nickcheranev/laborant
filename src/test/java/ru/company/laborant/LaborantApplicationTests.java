@@ -9,11 +9,4 @@ import ru.company.laborant.jpa.domain.Customer;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LaborantApplicationTests {
-
-	@Test
-	public void contextLoads() {
-		Customer customer = new Customer("yutu", "ngf", "ghnhgnhg", "nhg");
-
-	}
-
 }
