@@ -10,7 +10,9 @@ import java.util.Optional;
  * @author Cheranev N.
  * created on 09.05.2019.
  */
-public interface CustomerRepository extends JpaRepository<Customer, Long>{
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
     Optional<Customer> findById(Long id);
+
     List<Customer> findByFullNameStartsWithIgnoreCase(String fullName);
 }
