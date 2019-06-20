@@ -22,64 +22,56 @@ import ru.company.laborant.jpa.domain.Folder;
  * created on 21.05.2019.
  */
 @Route(value = "customer", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
-@PageTitle("Customer")
+//@RouteAlias(value = "", layout = MainLayout.class)
+@PageTitle("Заказчик")
 public class CustomerView extends VerticalLayout {
+
+    public static final String VIEW_TITLE = "Заказчики";
+    public static final String VIEW_NAME = "customer";
     private final CustomerRepository repo;
     private final CustomerEditor editor;
     final Grid<Customer> grid;
     final TextField filter;
     private final Button addNewBtn;
 
-    public static final String VIEW_NAME = "Заказчики";
-
     public CustomerView(CustomerRepository repo, CustomerEditor editor) {
 
         this.repo = repo;
         this.editor = editor;
-        this.grid = new Grid<>(Customer.class);
-        this.filter = new TextField();
-        this.addNewBtn = new Button("Новый заказчик", VaadinIcon.PLUS.create());
 
-        // build layout
-        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-        add(actions, grid, editor);
+        filter = new TextField();
+        addNewBtn = new Button("Новый заказчик", VaadinIcon.PLUS.create());
 
-        grid.setHeight("300px");
+        grid = new Grid<>(Customer.class);
         grid.setColumns("id", "fullName", "address", "phone", "postIndex");
-        grid.getColumnByKey("id").setWidth("50px").setFlexGrow(0);
+        grid.getColumnByKey("id");
 
-        filter.setPlaceholder("Фильтр по наименованию");
-
-        //setSizeFull();
-        //setJustifyContentMode(JustifyContentMode.CENTER);
-        //setAlignItems(Alignment.CENTER);
-
-        // Hook logic to components
-
-        // Replace listing with filtered content when user changes filter
-        filter.setValueChangeMode(ValueChangeMode.EAGER);
-        filter.addValueChangeListener(e -> listCustomers(e.getValue()));
-
-        // Connect selected Customer to editor or hide if none is selected
         grid.asSingleSelect().addValueChangeListener(e -> {
             editor.editCustomer(e.getValue());
         });
 
-        // Instantiate and edit new Customer the new button is clicked
+        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+        actions.setSizeFull();
+        grid.setSizeFull();
+        setSizeFull();
+
+        add(actions, grid, editor);
+
+        filter.setPlaceholder("Фильтр по наименованию");
+        filter.setValueChangeMode(ValueChangeMode.EAGER);
+        filter.addValueChangeListener(e -> listCustomers(e.getValue()));
+
         addNewBtn.addClickListener(e -> editor.editCustomer(new Customer("",
                 "", "", "")));
 
-        // Listen changes made by the editor, refresh data from backend
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
             listCustomers(filter.getValue());
         });
 
-        // Initialize listing
         listCustomers(null);
     }
-    // tag::listCustomers[]
+
     void listCustomers(String filterText) {
         if (StringUtils.isEmpty(filterText)) {
             grid.setItems(repo.findAll());
@@ -88,5 +80,4 @@ public class CustomerView extends VerticalLayout {
             grid.setItems(repo.findByFullNameStartsWithIgnoreCase(filterText));
         }
     }
-    // end::listCustomers[]
 }

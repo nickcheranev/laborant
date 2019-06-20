@@ -1,9 +1,11 @@
 package ru.company.laborant.ui;
 
+import com.vaadin.flow.component.applayout.AbstractAppRouterLayout;
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.applayout.AppLayoutMenu;
+import com.vaadin.flow.component.applayout.AppLayoutMenuItem;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
@@ -13,18 +15,16 @@ import com.vaadin.flow.theme.lumo.Lumo;
  */
 @HtmlImport("css/shared-styles.html")
 @Theme(value = Lumo.class)
-public class MainLayout extends FlexLayout implements RouterLayout {
+public class MainLayout extends AbstractAppRouterLayout {
 
-    private Menu menu;
+    @Override
+    protected void configure(AppLayout appLayout, AppLayoutMenu menu) {
+        setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ACADEMY_CAP.create(), CustomerView.VIEW_TITLE, CustomerView.VIEW_NAME));
+        setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.INFO_CIRCLE.create(), AboutView.VIEW_TITLE, AboutView.VIEW_NAME));
+    }
 
-    public MainLayout() {
-        setSizeFull();
-        setClassName("main-layout");
-
-        menu = new Menu();
-        menu.addView(CustomerView.class, CustomerView.VIEW_NAME, VaadinIcon.ACADEMY_CAP.create());
-        menu.addView(AboutView.class, AboutView.VIEW_NAME, VaadinIcon.INFO_CIRCLE.create());
-
-        add(menu);
+    private void setMenuItem(AppLayoutMenu menu, AppLayoutMenuItem menuItem) {
+        menuItem.getElement().setAttribute("theme", "icon-on-top");
+        menu.addMenuItem(menuItem);
     }
 }

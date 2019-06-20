@@ -51,6 +51,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
         save.getElement().getThemeList().add("primary");
         delete.getElement().getThemeList().add("error");
+        cancel.getElement().getThemeList().add("primary");
 
         addKeyPressListener(Key.ENTER, e -> save());
 
