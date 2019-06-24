@@ -29,11 +29,8 @@ public class CustomerRepositoryTest {
         Folder folder = new Folder();
         folderRepository.save(folder);
 
-        Customer added = new Customer("Иванов И.И.", "г.Березники, ул.Пятилетки 50-21","332-332", "618400");
+        Customer added = new Customer();
         added.setFullName("fullname");
-        added.setAddress("address");
-        added.setPhone("phone");
-        added.setPostIndex("postIndex");
         added.setFolder(folder);
         Customer saved = repository.save(added);
         Assert.isTrue(saved.getId().equals(1L));
