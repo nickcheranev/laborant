@@ -32,7 +32,7 @@ public class CustomerView extends VerticalLayout {
     private final CustomerEditor editor;
     final Grid<Customer> grid;
     final TextField filter;
-    private final Button addNewBtn;
+    private final Button addNew;
 
     public CustomerView(CustomerRepository repo, CustomerEditor editor) {
 
@@ -40,35 +40,36 @@ public class CustomerView extends VerticalLayout {
         this.editor = editor;
 
         filter = new TextField();
-        addNewBtn = new Button("Новый заказчик", VaadinIcon.PLUS.create());
+        addNew = new Button("Новый заказчик", VaadinIcon.PLUS.create());
 
         grid = new Grid<>(Customer.class);
         grid.setColumns("id", "fullName", "address", "phone", "postIndex");
-        grid.getColumnByKey("id");
+        grid.removeColumnByKey("id");
 
         grid.asSingleSelect().addValueChangeListener(e -> {
             editor.editCustomer(e.getValue());
         });
 
-        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-        actions.setSizeFull();
+        HorizontalLayout mainContent = new HorizontalLayout(grid, editor);
+        HorizontalLayout forms = new HorizontalLayout(filter, addNew);
+
+        mainContent.setSizeFull();
         grid.setSizeFull();
         setSizeFull();
 
-        add(actions, grid, editor);
+        add(forms, mainContent);
 
         filter.setPlaceholder("Фильтр по наименованию");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> listCustomers(e.getValue()));
 
-        addNewBtn.addClickListener(e -> editor.editCustomer(new Customer("",
+        addNew.addClickListener(e -> editor.editCustomer(new Customer("",
                 "", "", "")));
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
             listCustomers(filter.getValue());
         });
-
         listCustomers(null);
     }
 
@@ -81,3 +82,4 @@ public class CustomerView extends VerticalLayout {
         }
     }
 }
+//findByFullNameStartsWithIgnoreCase

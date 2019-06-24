@@ -33,7 +33,6 @@ public class Customer {
 
 
     public Customer(String fullName, String address, String phone, String postIndex) {
-
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
@@ -43,5 +42,9 @@ public class Customer {
     public String toString() {
         return String.format("Customer[id=%d, fullName='%s', address='%s', phone='%s', postIndex='%s']", id,
                 fullName, address, phone, postIndex);
+    }
+
+    public Long getId() {
+        return id;
     }
 }

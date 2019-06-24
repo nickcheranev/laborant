@@ -35,6 +35,8 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
     HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 
     Binder<Customer> binder = new Binder<>(Customer.class);
+
+    //обработчик изменений
     private ChangeHandler changeHandler;
 
     @Autowired
@@ -55,10 +57,9 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
         addKeyPressListener(Key.ENTER, e -> save());
 
-        // wire action buttons to save, delete and reset
         save.addClickListener(e -> save());
         delete.addClickListener(e -> delete());
-        cancel.addClickListener(e -> editCustomer(customer));
+        cancel.addClickListener(e -> editCustomer(null));
         setVisible(false);
     }
     void delete() {
@@ -81,27 +82,16 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
         }
         final boolean persisted = c.getId() != null;
         if (persisted) {
-            // Find fresh entity for editing
             customer = repository.findById(c.getId()).get();
         }
         else {
             customer = c;
         }
-        cancel.setVisible(persisted);
-
-        // Bind customer properties to similarly named fields
-        // Could also use annotation or "manual binding" or programmatically
-        // moving values from fields to entities before saving
         binder.setBean(customer);
-
         setVisible(true);
-
-        // Focus first name initially
         fullName.focus();
     }
     public void setChangeHandler(ChangeHandler h) {
-        // ChangeHandler is notified when either save or delete
-        // is clicked
         changeHandler = h;
     }
 }
