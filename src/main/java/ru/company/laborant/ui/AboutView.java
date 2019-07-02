@@ -16,7 +16,8 @@ import ru.company.laborant.LaborantApplication;
 @PageTitle("About")
 public class AboutView extends HorizontalLayout {
 
-    public static final String VIEW_NAME = "О Программе";
+    public static final String VIEW_NAME = "about";
+    public static final String VIEW_TITLE = "О Программе";
 
     public AboutView() {
         add(VaadinIcon.INFO_CIRCLE.create());
