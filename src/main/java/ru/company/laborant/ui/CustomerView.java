@@ -2,7 +2,6 @@ package ru.company.laborant.ui;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -10,12 +9,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
-import com.vaadin.flow.server.Version;
 import org.springframework.util.StringUtils;
 import ru.company.laborant.jpa.dao.CustomerRepository;
 import ru.company.laborant.jpa.domain.Customer;
-import ru.company.laborant.jpa.domain.Folder;
 
 /**
  * @author Cheranev N.
@@ -28,15 +24,14 @@ public class CustomerView extends VerticalLayout {
 
     public static final String VIEW_TITLE = "Заказчики";
     public static final String VIEW_NAME = "customer";
-    private final CustomerRepository repo;
     private final CustomerEditor editor;
+    private final CustomerRepository customerRepository;
     final Grid<Customer> grid;
     final TextField filter;
     private final Button addNew;
 
-    public CustomerView(CustomerRepository repo, CustomerEditor editor) {
-
-        this.repo = repo;
+    public CustomerView(CustomerRepository customerRepository, CustomerEditor editor) {
+        this.customerRepository = customerRepository;
         this.editor = editor;
 
         filter = new TextField();
@@ -59,7 +54,7 @@ public class CustomerView extends VerticalLayout {
 
         add(forms, mainContent);
 
-        filter.setPlaceholder("Фильтр по наименованию");
+        filter.setPlaceholder("Фильтр");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> listCustomers(e.getValue()));
 
@@ -75,11 +70,11 @@ public class CustomerView extends VerticalLayout {
 
     void listCustomers(String filterText) {
         if (StringUtils.isEmpty(filterText)) {
-            grid.setItems(repo.findAll());
+            grid.setItems(customerRepository.findAll());
         }
         else {
-            grid.setItems(repo.findByFullNameStartsWithIgnoreCase(filterText));
+            grid.setItems(customerRepository.findAllByFullNameStartsWithIgnoreCaseOrAddressStartsWithIgnoreCaseOrPhoneStartsWithIgnoreCaseOrPostIndexStartsWithIgnoreCase(filterText,
+                    filterText, filterText, filterText));
         }
     }
 }
-//findByFullNameStartsWithIgnoreCase
