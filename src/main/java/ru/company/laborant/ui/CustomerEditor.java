@@ -18,17 +18,14 @@ import ru.company.laborant.jpa.domain.Customer;
 @UIScope
 public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
-    private final CustomerRepository repository;
-
+    private CustomerRepository customerRepository;
     private Customer customer;
 
-    /* Fields to edit properties in Customer entity */
     TextField fullName = new TextField("Наименование");
     TextField address = new TextField("Адрес");
     TextField phone = new TextField("Телефон");
     TextField postIndex = new TextField("Индекс");
-    /* Action buttons */
-    // TODO why more code?
+
     Button save = new Button("Сохранить", VaadinIcon.CHECK.create());
     Button cancel = new Button("Отмена");
     Button delete = new Button("Удалить", VaadinIcon.TRASH.create());
@@ -40,8 +37,8 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
     private ChangeHandler changeHandler;
 
     @Autowired
-    public CustomerEditor(CustomerRepository repository) {
-        this.repository = repository;
+    public CustomerEditor(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
 
         add(fullName, address, phone, postIndex, actions);
 
@@ -63,12 +60,13 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
         setVisible(false);
     }
     void delete() {
-        repository.delete(customer);
+        customerRepository.delete(customer);
         changeHandler.onChange();
     }
 
     void save() {
-        repository.save(customer);
+
+        customerRepository.save(customer);
         changeHandler.onChange();
     }
 
@@ -82,7 +80,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
         }
         final boolean persisted = c.getId() != null;
         if (persisted) {
-            customer = repository.findById(c.getId()).get();
+            customer = customerRepository.findById(c.getId()).get();
         }
         else {
             customer = c;

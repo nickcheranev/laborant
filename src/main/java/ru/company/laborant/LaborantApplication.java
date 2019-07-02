@@ -24,30 +24,6 @@ public class LaborantApplication {
 			repository.save(new Customer("Jack", "Bauer", "222222", "222222"));
 			repository.save(new Customer("Chloe", "O'Brian", "555", "555"));
 			repository.save(new Customer("Kim", "Bauer", "333","333"));
-
-			// fetch all customers
-			log.info("Customers found with findAll():");
-			log.info("-------------------------------");
-			for (Customer customer : repository.findAll()) {
-				log.info(customer.toString());
-			}
-			log.info("");
-
-			// fetch an individual customer by ID
-			Customer customer = repository.findById(1L).get();
-			log.info("Customer found with findOne(1L):");
-			log.info("--------------------------------");
-			log.info(customer.toString());
-			log.info("");
-
-			// fetch customers by last name
-			log.info("Customer found with findByFullNameStartsWithIgnoreCase('Bauer'):");
-			log.info("--------------------------------------------");
-			for (Customer bauer : repository
-					.findByFullNameStartsWithIgnoreCase("Bauer")) {
-				log.info(bauer.toString());
-			}
-			log.info("");
 		};
 	}
 }
