@@ -73,7 +73,7 @@ public class CustomerView extends VerticalLayout {
             grid.setItems(customerRepository.findAll());
         }
         else {
-            grid.setItems(customerRepository.findAllByFullNameStartsWithIgnoreCaseOrAddressStartsWithIgnoreCaseOrPhoneStartsWithIgnoreCaseOrPostIndexStartsWithIgnoreCase(filterText,
+            grid.setItems(customerRepository.findAllByFullNameContainingIgnoreCaseOrAddressContainingIgnoreCaseOrPhoneContainingIgnoreCaseOrPostIndexContainingIgnoreCase(filterText,
                     filterText, filterText, filterText));
         }
     }

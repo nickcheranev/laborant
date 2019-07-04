@@ -14,5 +14,5 @@ import java.util.Optional;
  * created on 09.05.2019.
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    List<Customer>findAllByFullNameStartsWithIgnoreCaseOrAddressStartsWithIgnoreCaseOrPhoneStartsWithIgnoreCaseOrPostIndexStartsWithIgnoreCase(String s1, String s2, String s3, String s4);
+    List<Customer>findAllByFullNameContainingIgnoreCaseOrAddressContainingIgnoreCaseOrPhoneContainingIgnoreCaseOrPostIndexContainingIgnoreCase(String s1, String s2, String s3, String s4);
 }
