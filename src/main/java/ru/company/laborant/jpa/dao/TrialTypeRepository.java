@@ -3,6 +3,7 @@ package ru.company.laborant.jpa.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.company.laborant.jpa.domain.TrialType;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,4 +12,5 @@ import java.util.Optional;
  */
 public interface TrialTypeRepository extends JpaRepository<TrialType, Long> {
     Optional<TrialType> findById(Long id);
+    List<TrialType> findAllByNameContainingIgnoreCase(String name);
 }

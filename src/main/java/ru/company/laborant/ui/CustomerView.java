@@ -19,11 +19,11 @@ import ru.company.laborant.jpa.domain.Customer;
  */
 @Route(value = "customer", layout = MainLayout.class)
 //@RouteAlias(value = "", layout = MainLayout.class)
-@PageTitle("Заказчик")
+@PageTitle("Заказчики")
 public class CustomerView extends VerticalLayout {
 
-    public static final String VIEW_TITLE = "Заказчики";
     public static final String VIEW_NAME = "customer";
+    public static final String VIEW_TITLE = "Заказчики";
     private final CustomerEditor editor;
     private final CustomerRepository customerRepository;
     final Grid<Customer> grid;

@@ -20,6 +20,7 @@ public class MainLayout extends AbstractAppRouterLayout {
     @Override
     protected void configure(AppLayout appLayout, AppLayoutMenu menu) {
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ACADEMY_CAP.create(), CustomerView.VIEW_TITLE, CustomerView.VIEW_NAME));
+        setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ACADEMY_CAP.create(), TrialTypeView.VIEW_TITLE, TrialTypeView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.INFO_CIRCLE.create(), AboutView.VIEW_TITLE, AboutView.VIEW_NAME));
     }
 

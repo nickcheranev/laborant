@@ -1,6 +1,7 @@
 package ru.company.laborant.jpa.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class TrialType {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TRIAL_TYPE")
@@ -22,4 +24,18 @@ public class TrialType {
     @ManyToOne
     @JoinColumn(name = "folderId")
     private Folder folder;
+
+    public TrialType(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    @Override
+    public String toString () {
+        return String.format("TrialType[id=%d, name='%s', description='%s']", id, name, description);
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
