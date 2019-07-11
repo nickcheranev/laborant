@@ -1,5 +1,6 @@
 package ru.company.laborant.ui;
 
+
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
@@ -15,39 +16,38 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import ru.company.laborant.jpa.dao.TrialTypeRepository;
-import ru.company.laborant.jpa.domain.TrialType;
+import ru.company.laborant.jpa.dao.EmployeeRepository;
+import ru.company.laborant.jpa.domain.Employee;
 
-@Route(value = "trial_type", layout = MainLayout.class)
-@PageTitle("Тип испытания")
-public class TrialTypeView extends VerticalLayout {
+@Route(value = "employee", layout = MainLayout.class)
+@PageTitle("Сотрудники")
+public class EmployeeView extends VerticalLayout {
 
-    public static final String VIEW_NAME = "trial_type";
-    public static final String VIEW_TITLE = "Тип испытания";
+    public static final String VIEW_NAME = "employee";
+    public static final String VIEW_TITLE = "Сотрудники";
 
-    private final Grid<TrialType> grid;
+    private final EmployeeRepository repository;
+    private final EmployeeEditor editor;
+    private final Grid<Employee> grid;
     final TextField filter;
     private final Button addNew;
-    private final TrialTypeRepository trialTypeRepository;
-    private final TrialTypeEditor trialTypeEditor;
 
-    public TrialTypeView(TrialTypeRepository trialTypeRepository, TrialTypeEditor trialTypeEditor) {
-
-        this.trialTypeRepository = trialTypeRepository;
-        this.trialTypeEditor = trialTypeEditor;
+    public EmployeeView(EmployeeRepository repository, EmployeeEditor editor) {
+        this.repository = repository;
+        this.editor = editor;
 
         filter = new TextField();
-        addNew = new Button("Новый тип", VaadinIcon.PLUS.create());
+        addNew = new Button("Новый сотрудник", VaadinIcon.PLUS.create());
 
-        grid = new Grid<>(TrialType.class);
-        grid.setColumns("id", "name", "description");
+        grid = new Grid<>(Employee.class);
+        grid.setColumns("id", "fullName", "address", "phone", "postIndex", "description");
         grid.removeColumnByKey("id");
 
         grid.asSingleSelect().addValueChangeListener(e -> {
-            this.trialTypeEditor.editTrialType(e.getValue());
+            this.editor.editEmployee(e.getValue());
         });
 
-        HorizontalLayout mainContent = new HorizontalLayout(grid, this.trialTypeEditor);
+        HorizontalLayout mainContent = new HorizontalLayout(grid, this.editor);
         HorizontalLayout forms = new HorizontalLayout(filter, addNew);
 
         mainContent.setSizeFull();
@@ -58,31 +58,35 @@ public class TrialTypeView extends VerticalLayout {
 
         filter.setPlaceholder("Фильтр");
         filter.setValueChangeMode(ValueChangeMode.EAGER);
-        filter.addValueChangeListener(e -> listTrialType(e.getValue()));
+        filter.addValueChangeListener(e -> listEmployee(e.getValue()));
 
-        addNew.addClickListener(e -> this.trialTypeEditor.editTrialType(new TrialType("", "")));
-
-        this.trialTypeEditor.setChangeHandler(() -> {
-            this.trialTypeEditor.setVisible(false);
-            listTrialType(filter.getValue());
+        addNew.addClickListener(e -> this.editor.editEmployee(new Employee("",
+                "", "", "", "")));
+        this.editor.setChangeHandler(() -> {
+            this.editor.setVisible(false);
+            listEmployee(filter.getValue());
         });
-        listTrialType(null);
+        listEmployee(null);
     }
-    void listTrialType(String filterText) {
+    void listEmployee(String filterText) {
         if (StringUtils.isEmpty(filterText)) {
-            grid.setItems(trialTypeRepository.findAll());
+            grid.setItems(repository.findAll());
         }
         else {
-            grid.setItems(trialTypeRepository.findAllByNameContainingIgnoreCase(filterText));
+            grid.setItems(repository.findAllByFullNameContainingIgnoreCaseOrAddressContainingIgnoreCaseOrPhoneContainingIgnoreCaseOrPostIndexContainingIgnoreCaseOrDescriptionContainingIgnoreCase(filterText,
+                    filterText, filterText, filterText, filterText));
         }
     }
     @Component
-    static class TrialTypeEditor extends VerticalLayout implements KeyNotifier{
+    static class EmployeeEditor extends VerticalLayout implements KeyNotifier {
 
-        private TrialType trialType;
-        private final TrialTypeRepository repository;
+        private Employee employee;
+        private final EmployeeRepository repository;
 
-        TextField name = new TextField("Тип испытания");
+        TextField fullName = new TextField("ФИО");
+        TextField address = new TextField("Адресс");
+        TextField phone = new TextField("Номер телефона");
+        TextField postIndex = new TextField("Индекс");
         TextField description = new TextField("Описание");
 
         Button save = new Button("Сохранить", VaadinIcon.CHECK.create());
@@ -90,16 +94,16 @@ public class TrialTypeView extends VerticalLayout {
         Button delete = new Button("Удалить", VaadinIcon.TRASH.create());
         HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 
-        Binder<TrialType> binder = new Binder<>(TrialType.class);
+        Binder<Employee> binder = new Binder<>(Employee.class);
 
         //обработчик изменений
         private ChangeHandler changeHandler;
 
         @Autowired
-        public TrialTypeEditor(TrialTypeRepository repository) {
+        public EmployeeEditor(EmployeeRepository repository) {
             this.repository = repository;
 
-            add(name, description, actions);
+            add(fullName, address, phone, postIndex, description, actions);
 
             // bind using naming convention
             binder.bindInstanceFields(this);
@@ -115,36 +119,36 @@ public class TrialTypeView extends VerticalLayout {
 
             save.addClickListener(e -> save());
             delete.addClickListener(e -> delete());
-            cancel.addClickListener(e -> editTrialType(null));
+            cancel.addClickListener(e -> editEmployee(null));
             setVisible(false);
         }
         void delete() {
-            repository.delete(trialType);
+            repository.delete(employee);
             changeHandler.onChange();
         }
 
         void save() {
-            repository.save(trialType);
+            repository.save(employee);
             changeHandler.onChange();
         }
         public interface ChangeHandler {
             void onChange();
         }
-        public final void editTrialType(TrialType c) {
+        public final void editEmployee(Employee c) {
             if (c == null) {
                 setVisible(false);
                 return;
             }
             final boolean persisted = c.getId() != null;
             if (persisted) {
-                trialType = repository.findById(c.getId()).get();
+                employee = repository.findById(c.getId()).get();
             }
             else {
-                trialType = c;
+                employee = c;
             }
-            binder.setBean(trialType);
+            binder.setBean(employee);
             setVisible(true);
-            name.focus();
+            fullName.focus();
         }
         public void setChangeHandler(ChangeHandler h) {
             changeHandler = h;

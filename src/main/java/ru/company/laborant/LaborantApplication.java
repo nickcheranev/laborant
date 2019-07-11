@@ -7,8 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ru.company.laborant.jpa.dao.CustomerRepository;
+import ru.company.laborant.jpa.dao.EmployeeRepository;
 import ru.company.laborant.jpa.dao.TrialTypeRepository;
 import ru.company.laborant.jpa.domain.Customer;
+import ru.company.laborant.jpa.domain.Employee;
 import ru.company.laborant.jpa.domain.TrialType;
 
 @SpringBootApplication
@@ -20,13 +22,17 @@ public class LaborantApplication {
 	}
 
 	@Bean
-	public CommandLineRunner loadData(CustomerRepository repository, TrialTypeRepository trialTypeRepository) {
+	public CommandLineRunner loadData(CustomerRepository repository,
+									  TrialTypeRepository trialTypeRepository,
+									  EmployeeRepository employeeRepository) {
 		return (args) -> {
 			// save a couple of customers
 			repository.save(new Customer("Jack", "Bauer", "222222", "222222"));
 			repository.save(new Customer("Chloe", "O'Brian", "555", "555"));
 			repository.save(new Customer("Kim", "Bauer", "333","333"));
-			trialTypeRepository.save((new TrialType("Химическое", "Пациент подвергается химическому воздействию")));
+			trialTypeRepository.save(new TrialType("Химическое", "Пациент подвергается химическому воздействию"));
+			employeeRepository.save(new Employee("Иванов Иван Иванович", "г.Пермь, Ленина 50-9",
+					"777-777", "614000", "Лаборант"));
 		};
 	}
 }

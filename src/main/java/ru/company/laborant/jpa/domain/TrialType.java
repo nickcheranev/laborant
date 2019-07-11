@@ -29,13 +29,11 @@ public class TrialType {
         this.name = name;
         this.description = description;
     }
-
+    public Long getId() {
+        return id;
+    }
     @Override
     public String toString () {
         return String.format("TrialType[id=%d, name='%s', description='%s']", id, name, description);
-    }
-
-    public Long getId() {
-        return id;
     }
 }
