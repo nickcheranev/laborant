@@ -23,6 +23,8 @@ public class MainLayout extends AbstractAppRouterLayout {
                 CustomerView.VIEW_TITLE, CustomerView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.DOCTOR.create(),
                 TrialTypeView.VIEW_TITLE, TrialTypeView.VIEW_NAME));
+        setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ARCHIVES.create(),
+                TraitView.VIEW_TITLE, TraitView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.GROUP.create(),
                 EmployeeView.VIEW_TITLE, EmployeeView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.INFO_CIRCLE.create(),

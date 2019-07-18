@@ -1,7 +1,7 @@
 package ru.company.laborant.jpa.domain;
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
@@ -12,6 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class Trait {
 
     @Id
@@ -26,4 +27,16 @@ public class Trait {
     @ManyToOne
     @JoinColumn(name = "folderId")
     private Folder folder;
+
+    public Trait(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    public Long getId() {
+        return id;
+    }
+    @Override
+    public String toString () {
+        return String.format("Trait[id=%d, name='%s', description='%s']", id, name, description);
+    }
 }
