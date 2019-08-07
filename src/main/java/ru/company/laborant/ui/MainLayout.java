@@ -25,6 +25,8 @@ public class MainLayout extends AbstractAppRouterLayout {
                 TrialTypeView.VIEW_TITLE, TrialTypeView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.ARCHIVES.create(),
                 TraitView.VIEW_TITLE, TraitView.VIEW_NAME));
+        setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.STAR.create(),
+                ObjectView.VIEW_TITLE, ObjectView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.GROUP.create(),
                 EmployeeView.VIEW_TITLE, EmployeeView.VIEW_NAME));
         setMenuItem(menu, new AppLayoutMenuItem(VaadinIcon.INFO_CIRCLE.create(),

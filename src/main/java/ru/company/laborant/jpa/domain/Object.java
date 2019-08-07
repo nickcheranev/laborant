@@ -1,7 +1,7 @@
 package ru.company.laborant.jpa.domain;
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "OBJECT")
+@NoArgsConstructor
 public class Object {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OBJECT")
@@ -23,4 +24,16 @@ public class Object {
     @JoinColumn(name = "folderId")
     private Folder folder;
     private String description;
+
+    public Object(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    @Override
+    public String toString () {
+        return String.format("Trait[id=%d, name='%s']", id, name);
+    }
 }
